@@ -1,0 +1,4 @@
+Flask==3.0.3
+Flask-Mail==0.9.1
+mysql-connector-python==9.0.0
+reportlab==4.2.2

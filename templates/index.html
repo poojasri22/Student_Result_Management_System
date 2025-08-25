@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Result System</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body { background: #f8f9fa; }
+    .navbar { background: #0d6efd; }
+    .navbar-brand { color: white !important; font-weight: bold; font-size: 1.5rem; }
+    .container { margin-top: 30px; }
+    h1 { text-align: center; margin-bottom: 20px; font-weight: bold; color: #0d6efd; }
+    .card { box-shadow: 0px 4px 8px rgba(0,0,0,0.1); border-radius: 10px; }
+    .dashboard-card { text-align: center; padding: 20px; }
+    .dashboard-card h3 { font-size: 2rem; margin-bottom: 5px; }
+    .dashboard-card p { color: #666; margin: 0; }
+    footer { margin-top: 40px; text-align: center; color: #666; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white" href="/">🎓 Student Result System</a>
+    <div class="d-flex">
+      <a href="{{ url_for('teacher_logout') }}" class="btn btn-danger">🚪 Logout</a>
+    </div>
+  </div>
+</nav>
+
+
+
+  <!-- Navbar -->
+  <!--<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white" href="/">🎓 Student Result System</a>
+    <div class="d-flex">
+      {% if session.get('teacher') or session.get('student_id') %}
+        <a href="{{ url_for('logout_choice') }}" class="btn btn-danger">🚪 Logout</a>
+      {% else %}
+        <a href="{{ url_for('login_choice') }}" class="btn btn-success">🔑 Login</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>-->
+
+  <header class="text-center my-4">
+  <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/512/external-student-university-flaticons-lineal-color-flat-icons.png" width="100">
+  <h1>📊 Teacher Dashboard</h1>
+  <p class="lead">Manage students, marks, and results in one place</p>
+</header>
+
+
+  <div class="container">
+    <h1>Dashboard</h1>
+
+    <!-- Dashboard Summary Cards -->
+    <div class="row mb-4">
+      <div class="col-md-4">
+        <div class="card dashboard-card bg-light">
+          <h3>{{ total_students }}</h3>
+          <p>Total Students</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card dashboard-card bg-light">
+          <h3>{{ total_subjects }}</h3>
+          <p>Total Subjects</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card dashboard-card bg-light">
+          <h3>{{ avg_attendance }}%</h3>
+          <p>Average Attendance</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Student List -->
+    <div class="card p-3">
+      <div class="d-flex justify-content-between mb-3">
+        <h4 class="mb-0">Student List</h4>
+        <a href="/add_student" class="btn btn-primary">➕ Add Student</a>
+      </div>
+
+      <table class="table table-hover table-bordered text-center">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th><th>Name</th><th>Roll</th><th>Class</th><th>Attendance</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in students %}
+          <tr>
+            <td>{{ s[0] }}</td>
+            <td>{{ s[1] }}</td>
+            <td>{{ s[2] }}</td>
+            <td>{{ s[3] }}</td>
+            <td>{{ s[4] }}%</td>
+            <td>
+              <a href="/add_marks/{{s[0]}}" class="btn btn-sm btn-success">Add Marks</a>
+              <a href="/result/{{s[0]}}" class="btn btn-sm btn-info">View Result</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Student Result System | Built with Flask + MySQL</p>
+  </footer>
+
+</body>
+</html>
